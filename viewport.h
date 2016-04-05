@@ -8,18 +8,18 @@
 #include "opengl_include.h"
 
 
-float getWinHeight();
-float getWinWidth();
+GLfloat getWinHeight();
+GLfloat getWinWidth();
 
-float rawx2px(float raw);
-float rawy2px(float raw);
+GLfloat rawx2px(GLfloat raw);
+GLfloat rawy2px(GLfloat raw);
 /** convert the horizontal length in pixel to length in opengl coordinate**/
-float l2x(float x);
+GLfloat l2x(GLfloat x);
 /** convert the vertical length in pixel to length in opengl coordinate**/
-float l2y(float y);
+GLfloat l2y(GLfloat y);
 /** convert x in pixel to opengl coordinate**/
-float px2x(float x);
+GLfloat px2x(GLfloat x);
 /** convert y in pixel to opengl coordinate**/
-float px2y(float y);
+GLfloat px2y(GLfloat y);
 
 #endif

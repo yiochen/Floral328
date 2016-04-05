@@ -5,8 +5,9 @@
 
 
 class Vec{
-    GLfloat x, y;
+
 public:
+    GLfloat x, y;
     Vec();
     Vec(GLfloat x, GLfloat y);
     Vec add(Vec v2);

@@ -1,40 +1,40 @@
 #include "viewport.h"
 #include "constants.h"
 
-float getWinRawHeight(){
+GLfloat getWinRawHeight(){
     return glutGet(GLUT_WINDOW_HEIGHT);
 }
-float getWinRawWidth(){
+GLfloat getWinRawWidth(){
     return glutGet(GLUT_WINDOW_WIDTH);
 }
 
-float getWinHeight(){
+GLfloat getWinHeight(){
     return getWinRawHeight()/PIXEL_SIZE;
 }
-float getWinWidth(){
+GLfloat getWinWidth(){
     return getWinRawWidth()/PIXEL_SIZE;
 }
-float rawx2px(float raw){
+GLfloat rawx2px(GLfloat raw){
     return raw/PIXEL_SIZE;
 }
-float rawy2px(float raw){
+GLfloat rawy2px(GLfloat raw){
     return getWinHeight()-raw/PIXEL_SIZE-1;
 }
 /** convert the horizontal length in pixel to length in opengl coordinate**/
-float l2x(float x){
-    return static_cast<float>(2*x)/static_cast<float>(getWinWidth());
+GLfloat l2x(GLfloat x){
+    return static_cast<GLfloat>(2*x)/static_cast<GLfloat>(getWinWidth());
 }
 /** convert the vertical length in pixel to length in opengl coordinate**/
-float l2y(float y){
-    return static_cast<float>(2*y)/static_cast<float>(getWinHeight());
+GLfloat l2y(GLfloat y){
+    return static_cast<GLfloat>(2*y)/static_cast<GLfloat>(getWinHeight());
 }
 
 /** convert x in pixel to opengl coordinate**/
-float px2x(float x){
+GLfloat px2x(GLfloat x){
     return l2x(x)-1;
 }
 
 /** convert y in pixel to opengl coordinate**/
-float px2y(float y){
+GLfloat px2y(GLfloat y){
     return l2y(y)-1;
 }

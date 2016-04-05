@@ -7,35 +7,39 @@
 #include <thread>
 #include "constants.h"
 #include "vector.h"
+#include "canvas.h"
+#include "drawingPrem.h"
+
+//shapes
+#include "shape.h"
+#include "circle.h"
+
+
 #include <list>
 
 #define MAX_VERTS 100
 
-using namesapce std;
+using namespace std;
 
 list<Vec> controlHandles;
+Canvas * canvas=NULL;
+Circle* circle=NULL;
 
-
-void drawCircle(float radius){
-    glBegin(GL_LINE_LOOP);
-    glColor3f(1,0,0);
-    for (int i=0; i<=360;i++){
-        float deg=i*DEG2RAD;
-        glVertex2f(cos(deg)*radius, sin(deg)*radius);
+void renderUI(){
+    //draw the contollHandles
+    list<Vec>::iterator list=controlHandles.begin();
+    while (list!=controlHandles.end()){
+        Vec v=*list;
+        drawPoint(v.x, v.y);
+        list++;
     }
-    glEnd();
 }
 void display(){
-    glClearColor(0.0f,0.0f, 0.0f, 1.0f);//set the background to balck
-    glClear(GL_COLOR_BUFFER_BIT);//clear the color buffer
-    glLineWidth(2.5);
-    glColor3f(1.0,0.0,0.0);
-
-    glBegin(GL_LINES);
-    glVertex3f(px2x(50),px2y(0),0);
-    glVertex3f(px2x(50),px2y(40),0);
-    glEnd();
-    drawCircle(l2x(50));
+    printf("drawing nothin\n");
+    if (canvas!=NULL){
+        canvas->redraw();
+    }
+    renderUI();
     glFlush();
 }
 
@@ -49,14 +53,19 @@ void keyboard(unsigned char key, int x, int y){
 }
 
 void mouse(int mousebutton, int mousestate, int x, int y){
-    if (controlHandles.size()<3){
-        //make a vector and push it
-        controlHandles.push(Vec(rawx2px(x),rawy2px(y)));
-    }else{
-        //the size is 3 draw the circle and clear the list
-
+    if (mousestate==GLUT_DOWN){
+        if (controlHandles.size()<3){
+            //make a vector and push it
+            Vec v(rawx2px(x),rawy2px(y));
+            controlHandles.push_back(v);
+            printf("control added ,there are %d controls",(int)controlHandles.size());
+        }else{
+            //the size is 3 draw the circle and clear the list
+            controlHandles.clear();
+        }
+        glutPostRedisplay();
     }
-    glutPostRedisplay();
+
 }
 
 
@@ -66,16 +75,19 @@ void motion(int x, int y){
     glutPostRedisplay();
     // drawPoint(rawx2px(x),rawy2px(y),NULL);
 }
-void init(){
 
-}
 int main(int argc, char** argv){
     glutInit(&argc, argv);
-    init();
-    glutInitWindowSize(SCR_W,SCR_H);
-    glutInitWindowPosition(50,50);
-    glutCreateWindow("floral");
+    canvas=new Canvas();
+    canvas->init();
+    circle=new Circle(50.0f, 50.0f, 50.0f);
+    circle->range=180;
+    Circle* c2=new Circle(50.0f,50.0f,20.0f);
+    canvas->add(circle);
+    canvas->add(c2);
+    canvas->remove(c2);
     glutDisplayFunc(display);
+
     glutMouseFunc(mouse);
     glutMotionFunc(motion);
     glutKeyboardFunc(keyboard);

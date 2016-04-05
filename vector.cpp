@@ -1,6 +1,7 @@
 #include <math.h>
 #include "vector.h"
 #include <stdio.h>
+
 Vec::Vec(){
     this->x=1.0f;
     this->y=0.0f;
