@@ -1,6 +1,7 @@
 #include <math.h>
 #include "vector.h"
 #include <stdio.h>
+#include "constants.h"
 
 Vec::Vec(){
     this->x=1.0f;
@@ -34,4 +35,14 @@ Vec Vec::mul(GLfloat s){
 
 GLfloat Vec::mag(){
     return sqrt(this->x*this->x+this->y*this->y);
+}
+
+GLfloat Vec::angle(){
+    if (x==0 && y>=0) return 90;
+    if (x==0 && y<0) return 270;
+    GLfloat ans=atan(y/x)* RAD2DEG;
+    printf("ans is %f, y is %f, x is %f\n",ans, y, x);
+    if (ans<0) ans+=180.0f;
+    if (y<0) return atan(y/x) * RAD2DEG+180;
+    else return atan(y/x) * RAD2DEG;
 }

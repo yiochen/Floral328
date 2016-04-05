@@ -80,14 +80,17 @@ int main(int argc, char** argv){
     glutInit(&argc, argv);
     canvas=new Canvas();
     canvas->init();
-    circle=new Circle(50.0f, 50.0f, 50.0f);
-    circle->range=180;
-    Circle* c2=new Circle(50.0f,50.0f,20.0f);
+    circle=new Circle(0.0f, 0.0f, 50.0f);
+
+    printf("point 50,50");
+    Vec tv(93.3013f,75.0f);
+    printf("the point is at circle, %d\n",circle->pointAt(tv));
+    Circle* c2=new Circle(60.0f,80.0f,50.0f);
+    printf("the circles are touching %d and at %f,%f\n", circle->touching(c2), circle->touchingAt(c2).x, circle->touchingAt(c2).y);
     canvas->add(circle);
     canvas->add(c2);
-    canvas->remove(c2);
-    glutDisplayFunc(display);
 
+    glutDisplayFunc(display);
     glutMouseFunc(mouse);
     glutMotionFunc(motion);
     glutKeyboardFunc(keyboard);

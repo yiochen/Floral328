@@ -15,6 +15,7 @@ public:
     Vec norm();
     Vec mul(GLfloat s);
     GLfloat mag();
+    GLfloat angle();
 };
 
 #endif

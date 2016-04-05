@@ -3,6 +3,7 @@
 
 #include "opengl_include.h"
 #include "shape.h"
+#include "vector.h"
 
 class Circle : public Shape{
 public:
@@ -13,7 +14,11 @@ public:
     GLfloat startAngle;
     GLfloat range;
     GLfloat r;
-    void draw() override;
+    virtual void draw() override;
+    //check if a point is on the arc
+    bool pointAt(Vec v);
+    bool touching(Circle* circle);
+    Vec touchingAt(Circle* circle);
 };
 
 #endif

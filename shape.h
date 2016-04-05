@@ -1,4 +1,5 @@
 //abstract class for shapes
+//shape represent a visible object
 #ifndef SHAPE_H
 #define SHAPE_H
 #include "opengl_include.h"
