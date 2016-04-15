@@ -40,9 +40,19 @@ GLfloat Vec::mag(){
 GLfloat Vec::angle(){
     if (x==0 && y>=0) return 90;
     if (x==0 && y<0) return 270;
-    GLfloat ans=atan(y/x)* RAD2DEG;
-    printf("ans is %f, y is %f, x is %f\n",ans, y, x);
-    if (ans<0) ans+=180.0f;
-    if (y<0) return atan(y/x) * RAD2DEG+180;
-    else return atan(y/x) * RAD2DEG;
+    if (x>0 && y==0) return 0;
+    if (x<0 && y==0) return 180;
+    if (y>0 && x>0){//0-90 deg
+        return atan(y/x)* RAD2DEG;
+    }
+    if (y>0 && x<0){//90-180 deg y/x<0 atan<0
+        return atan(y/x)* RAD2DEG+180.0f;
+    }
+    if (y<0 && x<0){//180-270 deg y/x>0 atan>0
+        return atan(y/x)* RAD2DEG+180.0f;
+    }
+    if (y<0 && x>0){//270-360 deg y/x<0 atan<0
+        return atan(y/x)* RAD2DEG+360.0f;
+    }
+    return atan(y/x) * RAD2DEG;
 }

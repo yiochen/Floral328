@@ -4,7 +4,7 @@ GL_FLAGS= -lGL -lglut -std=c++11
 
 COMMON_COMMAND=$(CC) -c $^ $(FLAGS) $(GL_FLAGS)
 
-main: main.cpp viewport.o constants.h vector.o canvas.o circle.o drawingPrem.o
+main: main.cpp viewport.o constants.h vector.o canvas.o circle.o drawingPrem.o spiral.o branch.o
 	$(CC) $^ $(FLAGS) $(GL_FLAGS) -o $@
 
 viewport.o: viewport.cpp viewport.h constants.h
@@ -17,6 +17,10 @@ canvas.o: canvas.cpp canvas.h viewport.o shape.h
 	$(COMMON_COMMAND)
 
 circle.o: circle.cpp circle.h shape.h viewport.o
+	$(COMMON_COMMAND)
+spiral.o: spiral.cpp spiral.h circle.o
+	$(COMMON_COMMAND)
+branch.o: branch.cpp branch.h circle.o
 	$(COMMON_COMMAND)
 drawingPrem.o: drawingPrem.cpp drawingPrem.h viewport.o
 	$(COMMON_COMMAND)
