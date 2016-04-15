@@ -56,10 +56,14 @@ void keyboard(unsigned char key, int x, int y){
 void mouse(int mousebutton, int mousestate, int x, int y){
     if (mousestate==GLUT_DOWN){
         Vec tp(rawx2px(x), rawy2px(y));
-        Circle *lastCircle=branch->parts.back();
+
+		Circle *lastCircle=NULL;
         Circle * circle;
         Spiral* spiral;
         Vec vl;
+		if (branch->parts.begin() != branch->parts.end()) {
+			lastCircle= branch->parts.back();
+		}
         if (lastCircle!=NULL){
             vl=Vec(lastCircle->x, lastCircle->y);
         }

@@ -1,6 +1,6 @@
 #include "spiral.h"
 #include "constants.h"
-#include <math.h>
+#include <cmath>
 #include "viewport.h"
 #include <stdio.h>
 

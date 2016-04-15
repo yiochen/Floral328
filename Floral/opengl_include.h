@@ -5,7 +5,7 @@
 #include <GLUT/glut.h>
 #include <OpenGL/OpenGL.h>
 #else
-#include <GL/glut.h>
+#include <gl/freeglut.h>
 #endif
 
 #endif
