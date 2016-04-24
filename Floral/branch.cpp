@@ -23,7 +23,13 @@ Branch* Branch::add(Circle* part){
         GLfloat ang2=dis2.angle();
         if (lastCircle->clockwise){
             printf("last circle starting angle is %f and ang1 is %f\n", lastCircle->startAngle, ang1);
-            lastCircle->range=abs(lastCircle->startAngle-ang1);
+			if (lastCircle->startAngle < ang1) {
+				lastCircle->range = lastCircle->startAngle + 360.0 - ang1;
+			}
+			else {
+				lastCircle->range = lastCircle->startAngle - ang1;
+			}
+            //lastCircle->range=abs(lastCircle->startAngle-ang1);
         }else{
             lastCircle->range=ang1-lastCircle->startAngle;
             if (lastCircle->range<0) lastCircle->range+=360;
