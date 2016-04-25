@@ -19,6 +19,10 @@
 
 #include <list>
 
+#include "IL/il.h"
+#include "IL/ilu.h"
+#include "LTexture.h"
+
 #define MAX_VERTS 100
 
 using namespace std;
@@ -26,6 +30,11 @@ using namespace std;
 list<Vec> controlHandles;
 Canvas * canvas=NULL;
 Branch* branch=NULL;
+
+
+LTexture gLoadedTexture;
+
+
 void renderUI(){
     //draw the contollHandles
     list<Vec>::iterator list=controlHandles.begin();
@@ -36,11 +45,11 @@ void renderUI(){
     }
 }
 void display(){
-    printf("drawing nothin\n");
     if (canvas!=NULL){
         canvas->redraw();
     }
     renderUI();
+	//gLoadedTexture.render(0, 0);
     glFlush();
 }
 
@@ -56,11 +65,12 @@ void keyboard(unsigned char key, int x, int y){
 void mouse(int mousebutton, int mousestate, int x, int y){
     if (mousestate==GLUT_DOWN){
         Vec tp(rawx2px(x), rawy2px(y));
-
+		printf("click at %f,%f\n", tp.x, tp.y);
 		Circle *lastCircle=NULL;
         Circle * circle;
         Spiral* spiral;
         Vec vl;
+		Vec dis;
 		if (branch->parts.begin() != branch->parts.end()) {
 			lastCircle= branch->parts.back();
 		}
@@ -70,9 +80,14 @@ void mouse(int mousebutton, int mousestate, int x, int y){
         switch (controlHandles.size()){
             case 0:
                 debug("creating new Circle\n");
-                circle=new Circle(tp.x, tp.y, 30.0f);
-                circle->startAngle=270.0f;
-                circle->clockwise=false;
+				dis=Vec(branch->root.x, branch->root.y);
+				dis = dis.add(tp.neg());
+				printf("root at %f, %f\n", branch->root.x, branch->root.y);
+                circle=new Circle(tp.x, tp.y, dis.mag());
+				circle->range = 180.0f;
+                circle->startAngle=dis.angle();
+				printf("start angle is %f\n", circle->startAngle);
+                circle->clockwise=true;
                 branch->add(circle);
                 debug("finish creating\n");
                 break;
@@ -108,7 +123,7 @@ void mouse(int mousebutton, int mousestate, int x, int y){
                 //create a spiral
             case 3:
                 //create a new branch
-                branch=new Branch(0.0f,0.0f,Vec(0.0f,0.0f));
+                branch=new Branch(0.0f,0.0f,Vec(50.0f,0.0f));
                 canvas->add(branch);
                 break;
         }
@@ -133,25 +148,35 @@ void motion(int x, int y){
     glutPostRedisplay();
     // drawPoint(rawx2px(x),rawy2px(y),NULL);
 }
+bool loadMedia() {
+	
+	//Load texture
+	if (!gLoadedTexture.loadTextureFromFile("texture.png"))
+	{
+		printf("Unable to load file texture!\n");
+		return false;
+	}
 
+	return true;
+	
+}
+void angleTest() {
+	Vec a(0, 1);
+	printf("the angle of 0,1 is %f", a.angle());
+}
 int main(int argc, char** argv){
     glutInit(&argc, argv);
+	
+	/*glutInitDisplayMode(GLUT_DOUBLE);
+	glEnable(GL_TEXTURE_2D);*/
     canvas=new Canvas();
     canvas->init();
-    Vec left=Vec(-1, 0);
-    printf("left's angle is suppose to be 180, %f\n", left.angle());
-    branch=new Branch(0.0f,0.0f,Vec(0,0));
-    // circle=new Circle(50.0f, 0.0f, 50.0f);
-    // circle->clockwise=false;
-    //
-    // Circle* c2=new Circle(110.0f,80.0f,50.0f);
-    // printf("the circles are touching %d and at %f,%f\n", circle->touching(c2), circle->touchingAt(c2).x, circle->touchingAt(c2).y);
-    // //create a spiral
-    // Spiral* s=new Spiral(10.0f,80.0f,50.0f,90.0f);
-    //
-    // s->gap=5.0f;
-    // Branch* branch=new Branch(-40.0f,0.0f,Vec(0,0));
-    // branch->add(circle)->add(c2)->add(s);
+	angleTest();
+	/*ilInit();
+	loadMedia();*/
+    
+    branch=new Branch(0.0f,0.0f,Vec(50,0));
+   
     canvas->add(branch);
 
 

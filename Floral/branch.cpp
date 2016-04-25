@@ -42,6 +42,7 @@ Branch* Branch::add(Circle* part){
         }
         
     }
+	printf("the radius is %f and the coor is %f, %f\n", part->r, part->x, part->y);
     this->parts.push_back(part);
     return this;
 }
@@ -51,14 +52,14 @@ void Branch::draw(){
     while (it!=parts.end()){
         //save the original location
         Circle * c=(Circle*)(*it);
-        GLfloat cx=c->x;
+       /* GLfloat cx=c->x;
         GLfloat cy=c->y;
         c->x=this->x+cx;
-        c->y=this->y+cy;
+        c->y=this->y+cy;*/
         ((Circle*)(*it))->draw();
         //recover the position
-        c->x=cx;
-        c->y=cy;
+       /* c->x=cx;
+        c->y=cy;*/
         it++;
     }
 }

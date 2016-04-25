@@ -28,6 +28,7 @@
     <ClInclude Include="opengl_include.h" />
     <ClInclude Include="shape.h" />
     <ClInclude Include="spiral.h" />
+    <ClInclude Include="LTexture.h" />
     <ClInclude Include="vector.h" />
     <ClInclude Include="viewport.h" />
   </ItemGroup>
@@ -38,6 +39,7 @@
     <ClCompile Include="drawingPrem.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="spiral.cpp" />
+    <ClCompile Include="LTexture.cpp" />
     <ClCompile Include="vector.cpp" />
     <ClCompile Include="viewport.cpp" />
   </ItemGroup>
@@ -114,10 +116,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)DevIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)DevIL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>DevIL.lib;ILU.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
