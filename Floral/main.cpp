@@ -21,8 +21,10 @@
 
 #include "IL/il.h"
 #include "IL/ilu.h"
+#include "IL/ilut.h"
 #include "LTexture.h"
-
+#include "LUtil.h"
+#include "SOIL.h"
 #define MAX_VERTS 100
 
 using namespace std;
@@ -45,12 +47,32 @@ void renderUI(){
     }
 }
 void display(){
-    if (canvas!=NULL){
+	if (canvas!=NULL){
         canvas->redraw();
     }
-    renderUI();
-	//gLoadedTexture.render(0, 0);
+    //renderUI();
+	glEnable(GL_TEXTURE_2D);
+	gLoadedTexture.render(0, 0);
+	glDisable(GL_TEXTURE_2D);
+	glBegin(GL_QUADS);
+	glColor3f(1.0f, 1.0f, 0.0f); //if no color specified, paint to white
+
+	glVertex3f(0, 0,-0.2f);
+	// printf("the coordinate is %f %f\n", px2x(x), px2y(y));
+	glVertex3f(5, 0, -0.2f);
+	// printf("the coordinate is %f %f\n", px2x(x+1), px2y(y));
+	glVertex3f(5, 5, -0.2f);
+	// printf("the coordinate is %f %f\n", px2x(x+1), px2y(y+1));
+	glVertex3f(0, 5, -0.2f);
+	// printf("the coordinate is %f %f\n", px2x(x), px2y(y+1));
+	glEnd();
+	glColor3f(1.0f, 1.0f, 1.0f);
     glFlush();
+	/*int save_result = SOIL_save_screenshot(
+		"new_scr.bmp",
+		SOIL_SAVE_TYPE_BMP,
+		0, 0, 1024, 768
+		);*/
 }
 
 
@@ -141,7 +163,10 @@ void mouse(int mousebutton, int mousestate, int x, int y){
 
 }
 
-
+void reshape(int width, int height) {
+	canvas->reshape();
+	display();
+}
 
 void motion(int x, int y){
 
@@ -166,21 +191,28 @@ void angleTest() {
 }
 int main(int argc, char** argv){
     glutInit(&argc, argv);
-	
-	/*glutInitDisplayMode(GLUT_DOUBLE);
-	glEnable(GL_TEXTURE_2D);*/
+	//glutInitContextVersion(2, 1);
+	//glutInitDisplayMode(GLUT_DOUBLE);
+	//glutCreateWindow("opengl");
+	/*glutInitDisplayMode(GLUT_DOUBLE);*/
+	//glEnable(GL_TEXTURE_2D);
     canvas=new Canvas();
     canvas->init();
-	angleTest();
-	/*ilInit();
-	loadMedia();*/
-    
-    branch=new Branch(0.0f,0.0f,Vec(50,0));
+	initGL();
+	//angleTest();
+	
+	
+	//loadMedia();
+	loadMedia();
+   /* branch=new Branch(0.0f,0.0f,Vec(50,0));
    
-    canvas->add(branch);
+    canvas->add(branch);*/
 
 
     glutDisplayFunc(display);
+	//glutDisplayFunc(lRender);
+	//glutTimerFunc(15, runMainLoop, 0);
+	glutReshapeFunc(reshape);
     glutMouseFunc(mouse);
     glutMotionFunc(motion);
     glutKeyboardFunc(keyboard);

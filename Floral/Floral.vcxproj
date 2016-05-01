@@ -25,6 +25,7 @@
     <ClInclude Include="constants.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="drawingPrem.h" />
+    <ClInclude Include="LUtil.h" />
     <ClInclude Include="opengl_include.h" />
     <ClInclude Include="shape.h" />
     <ClInclude Include="spiral.h" />
@@ -37,6 +38,7 @@
     <ClCompile Include="canvas.cpp" />
     <ClCompile Include="circle.cpp" />
     <ClCompile Include="drawingPrem.cpp" />
+    <ClCompile Include="LUtil.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="spiral.cpp" />
     <ClCompile Include="LTexture.cpp" />
@@ -45,6 +47,11 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SOIL\projects\VC9\SOIL.vcxproj">
+      <Project>{c32fb2b4-500c-43cd-a099-eecce079d3f1}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{482FC8CC-D2F2-4F96-B205-E50B32168E0B}</ProjectGuid>
@@ -116,12 +123,12 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)DevIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)SOIL\src;$(SolutionDir)DevIL\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)DevIL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)DevIL\lib;$(SolutionDir)SOIL\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>DevIL.lib;ILU.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>

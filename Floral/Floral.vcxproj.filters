@@ -51,6 +51,9 @@
     <ClInclude Include="LTexture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="LUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="canvas.cpp">
@@ -78,6 +81,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="LTexture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LUtil.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
