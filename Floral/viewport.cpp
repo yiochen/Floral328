@@ -1,5 +1,4 @@
-#include "viewport.h"
-#include "constants.h"
+#include "common.h"
 
 GLfloat getWinRawHeight(){
     return glutGet(GLUT_WINDOW_HEIGHT);

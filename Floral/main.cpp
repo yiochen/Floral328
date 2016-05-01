@@ -44,19 +44,25 @@ void renderUI(){
     }
 }
 void display(){
+	lDisplay();
 	if (canvas!=NULL){
         canvas->redraw();
     }
     renderUI();
 	
     glFlush();
-	/*int save_result = SOIL_save_screenshot(
-		"new_scr.bmp",
-		SOIL_SAVE_TYPE_BMP,
-		0, 0, 1024, 768
-		);*/
+}
+void reshape(int width, int height) {
+	lReshape(width, height);
+	canvas->reshape();
+	display();
 }
 
+void motion(int x, int y) {
+
+	//glutPostRedisplay();
+	// drawPoint(rawx2px(x),rawy2px(y),NULL);
+}
 
 void pause(){
     std::this_thread::sleep_for(std::chrono::milliseconds(20));
@@ -157,24 +163,7 @@ void mouse(int mousebutton, int mousestate, int x, int y){
 	//screenshot();
 }
 
-void reshape(int width, int height) {
-	canvas->reshape();
-	display();
-}
 
-void motion(int x, int y){
-
-
-
-
-
-
-
-
-
-    //glutPostRedisplay();
-    // drawPoint(rawx2px(x),rawy2px(y),NULL);
-}
 
 void angleTest() {
 	Vec a(0, 1);
