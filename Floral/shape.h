@@ -12,6 +12,7 @@ public:
     GLfloat x;
     GLfloat y;
     virtual void draw()=0;
+	virtual void drawSolid(float initWidth, float endWidth) = 0;
 };
 
 #endif

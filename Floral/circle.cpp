@@ -6,42 +6,70 @@
 #include <math.h>
 #include <stdio.h>
 
-
-void Circle::draw(){
-	this->length = 0.0f;
-    glLineWidth(lineWidth);
-    glBegin(GL_LINE_STRIP);
+bool Circle::endCondition(GLfloat i) {
+	if (clockwise) return i >= startAngle - range;
+	else return i <= startAngle + range;
+}
+void Circle::draw(bool isSolid, float initWidth, float endWidth){
+	//glLineWidth(lineWidth);
+	glLineWidth(0);
+	if (!isSolid) {
+		this->length = 0.0f;
+		glBegin(GL_LINE_STRIP);
+	}
+	else {
+		glBegin(GL_QUAD_STRIP);
+	}
+    
     glColor3f(1,0,0);
-    GLfloat delta;
+	GLfloat delta;
+	if (clockwise) {
+		delta = -1.0f;
+	}
+	else {
+		delta = 1.0f;
+	}
+    
 	Vec lastPoint;
-    if (clockwise){
-        delta=-1.0f;
-        for (GLfloat i=startAngle; i>=startAngle-range;i+=delta){
-            float deg=Vec::deg2rad(i);
-            glVertex2f(px2x(cos(deg)*r+x), px2y(sin(deg)*r+y));
+	float currentLength = 0;
+    for (GLfloat i=startAngle; endCondition(i);i+=delta){
+        float deg=Vec::deg2rad(i);
+		if (i == startAngle) lastPoint = Vec(cos(deg)*r + x, sin(deg)*r + y);
+		if (!isSolid) {
+			glVertex2f(px2x(cos(deg)*r + x), px2y(sin(deg)*r + y));
 			//calculating length
-			if (i == startAngle) lastPoint = Vec(cos(deg)*r + x, sin(deg)*r + y);
-			//flog("circle length % add %f", length, Vec::getDistance(cos(deg)*r + x, sin(deg)*r + y, lastPoint.x, lastPoint.y));
 			length += Vec::getDistance(cos(deg)*r + x, sin(deg)*r + y, lastPoint.x, lastPoint.y);
-			lastPoint = Vec(cos(deg)*r + x, sin(deg)*r + y);
-        }
-    }else{
-        delta=1.0f;
-        for (GLfloat i=startAngle; i<=startAngle+range;i+=delta){
-            float deg=Vec::deg2rad(i);
-            glVertex2f(px2x(cos(deg)*r+x), px2y(sin(deg)*r+y));
-			//calculation length
-			if (i == startAngle) lastPoint = Vec(cos(deg)*r + x, sin(deg)*r + y);
-			//flog("circle length % add %f", length, Vec::getDistance(cos(deg)*r + x, sin(deg)*r + y, lastPoint.x, lastPoint.y));
-			length += Vec::getDistance(cos(deg)*r + x, sin(deg)*r + y, lastPoint.x, lastPoint.y);
-			lastPoint = Vec(cos(deg)*r + x, sin(deg)*r + y);
-        }
+				
+		}else {
+			currentLength += Vec::getDistance(cos(deg)*r + x, sin(deg)*r + y, lastPoint.x, lastPoint.y);
+			Vec point(cos(deg)*r + x, sin(deg)*r + y);
+			Vec halfWidth(point.x, point.y);
+			halfWidth = halfWidth.sub(Vec(x, y)).norm().mul(Vec::lerp(initWidth,endWidth,currentLength,length)/2);
+			//flog("initWidth is %f, halfwidth is %f, %f", initWidth, halfWidth.x, halfWidth.y);
+			Vec right(point);
+			right=right.sub(halfWidth);
+			//flog("right is %f, %f", px2x(right.x), px2y(right.y));
+			Vec left(point);
+			left=left.add(halfWidth);
+			glVertex2f(px2x(right.x), px2y(right.y));
+			glVertex2f(px2x(left.x), px2y(left.y));
+			//flog("drawing quad added %f,%f and %f, %f", px2x(right.x), px2y(right.y), px2x(left.x), px2y(left.y));
+			//add two point into it 
+		}
+		lastPoint = Vec(cos(deg)*r + x, sin(deg)*r + y);
     }
+  
 	flog("the length of the circle is is %f", length);
     glEnd();
     glFlush();
 }
-
+void Circle::draw() {
+	draw(false,0,0);
+}
+void Circle::drawSolid(float initWidth, float endWidth) {
+	draw(false, initWidth, endWidth);//draw first to calculate the length
+	draw(true,initWidth, endWidth);
+}
 bool Circle::pointAt(Vec v){
     Vec center(this->x, this->y);
     Vec dis=v.add(center.neg());

@@ -1,6 +1,7 @@
 #include "branch.h"
-#include <stdio.h>
+
 #include <list>
+#include "common.h"
 
 using namespace std;
 
@@ -48,18 +49,51 @@ Branch* Branch::add(Circle* part){
 }
 
 void Branch::draw(){
-    list<Circle*>::iterator it=parts.begin();
-    while (it!=parts.end()){
-        //save the original location
-        Circle * c=(Circle*)(*it);
-       /* GLfloat cx=c->x;
-        GLfloat cy=c->y;
-        c->x=this->x+cx;
-        c->y=this->y+cy;*/
-        ((Circle*)(*it))->draw();
-        //recover the position
-       /* c->x=cx;
-        c->y=cy;*/
-        it++;
-    }
+ //   list<Circle*>::iterator it=parts.begin();
+ //   while (it!=parts.end()){
+ //       //save the original location
+ //       Circle * c=(Circle*)(*it);
+ //      /* GLfloat cx=c->x;
+ //       GLfloat cy=c->y;
+ //       c->x=this->x+cx;
+ //       c->y=this->y+cy;*/
+ //       ((Circle*)(*it))->draw();
+ //       //recover the position
+ //      /* c->x=cx;
+ //       c->y=cy;*/
+ //       it++;
+ //   }
+	//flog("the lenght of the branch is %f", getLength());
+	drawSolid(20, 0);
+}
+void Branch::drawSolid(float initWidth, float endWidth) {
+	list<Circle*>::iterator it = parts.begin();
+	float total = getLength();
+	float current = 0;
+	while (it != parts.end()) {
+		//save the original location
+		Circle * c = (Circle*)(*it);
+		/* GLfloat cx=c->x;
+		GLfloat cy=c->y;
+		c->x=this->x+cx;
+		c->y=this->y+cy;*/
+		c->drawSolid(Vec::lerp(initWidth,endWidth, current, total),Vec::lerp(initWidth, endWidth, current+c->getLength(), total));
+		current += c->getLength();
+		//recover the position
+		/* c->x=cx;
+		c->y=cy;*/
+		it++;
+	}
+}
+
+float Branch::getLength() {
+	list<Circle*>::iterator it = parts.begin();
+	float length = 0;
+
+	while (it != parts.end()) {
+		Circle* c = (Circle*)(*it);
+		length += c->getLength();
+		it++;
+	}
+	return length;
 }

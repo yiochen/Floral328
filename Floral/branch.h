@@ -15,6 +15,8 @@ public:
     list<Circle*> parts;
     Branch* add(Circle* part);
     void draw() override;
+	void drawSolid(float initWidht, float endWidth) override;
+	float getLength();
 };
 
 #endif

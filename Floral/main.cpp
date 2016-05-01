@@ -109,7 +109,7 @@ void mouse(int mousebutton, int mousestate, int x, int y){
 				circle->range = 180.0f;
                 circle->startAngle=dis.angle();
 				printf("start angle is %f\n", circle->startAngle);
-                circle->clockwise=false;
+                circle->clockwise=true;
                 branch->add(circle);
                 debug("finish creating\n");
                 break;
