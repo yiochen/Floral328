@@ -6,6 +6,8 @@
 #include "vector.h"
 
 class Circle : public Shape{
+protected: 
+	float length;
 public:
     Circle(GLfloat x, GLfloat y, GLfloat r):Shape(x, y){this->r=r; this->startAngle=0;this->range=360; this->clockwise=true;}
     Circle():Circle(0.0f,0.0f,10.0f){}
@@ -20,6 +22,7 @@ public:
     bool pointAt(Vec v);
     bool touching(Circle* circle);
     Vec touchingAt(Circle* circle);
+	virtual float getLength() { return length; }
     bool inside(Circle* v);
     bool inside(Vec v);
 };

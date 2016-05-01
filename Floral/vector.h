@@ -29,6 +29,9 @@ public:
 	}
 	static float deg2rad(float deg) { return regulizeDeg(deg)*PI/180.0f; }
 	static float rad2deg(float rad) { return regulizeDeg(rad/PI*180.0f); }
+	static float getDistance(float x1, float y1, float x2, float y2) {
+		return sqrt(pow(x1 - x2, 2) + pow(y1 - y2, 2));
+	}
 };
 
 #endif
