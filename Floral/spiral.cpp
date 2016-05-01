@@ -5,12 +5,19 @@
 
 #include "common.h"
 
-void Spiral::draw(){
+void Spiral::draw(bool isSolid, float initWidth, float endWidth){
     printf("drawing spirals\n");
-	length = 0;
+	
     GLfloat rr=this->r;
-    glLineWidth(lineWidth);
-    glBegin(GL_LINE_STRIP);
+	if (!isSolid) {
+		length = 0;
+		glLineWidth(lineWidth);
+		glBegin(GL_LINE_STRIP);
+	}
+	else {
+		glBegin(GL_QUAD_STRIP);
+	}
+    
     glColor3f(1,0,0);
     GLfloat deg=startAngle;
     GLfloat delta;
@@ -20,14 +27,33 @@ void Spiral::draw(){
         delta=1.0f;
     }
 	Vec lastPoint;
+	float currentLength = 0;
     while (rr>0){
 		GLfloat raddeg = Vec::deg2rad(deg);
-        glVertex2f(px2x(cos(raddeg)*rr+x),px2y(sin(raddeg)*rr+y));
+        
 
 		if (rr == this->r) lastPoint = Vec(cos(raddeg)*r + x, sin(raddeg)*r + y);
 		//flog("deg is %f lastPoint is at %f,%f, and this point is %f, %f", deg, lastPoint.x, lastPoint.y, cos(raddeg)*rr + x, sin(raddeg)*rr + y);
 		//flog("length %f add %f", length, Vec::getDistance(cos(raddeg)*rr + x, sin(raddeg)*rr + y, lastPoint.x, lastPoint.y));
-		length += Vec::getDistance(cos(raddeg)*rr + x, sin(raddeg)*rr + y, lastPoint.x, lastPoint.y);
+		if (!isSolid) {
+			length += Vec::getDistance(cos(raddeg)*rr + x, sin(raddeg)*rr + y, lastPoint.x, lastPoint.y);
+			glVertex2f(px2x(cos(raddeg)*rr + x), px2y(sin(raddeg)*rr + y));
+		}
+		else {
+			currentLength+= Vec::getDistance(cos(raddeg)*rr + x, sin(raddeg)*rr + y, lastPoint.x, lastPoint.y);
+			Vec point(cos(raddeg)*rr + x, sin(raddeg)*rr + y);
+			Vec halfWidth(point.x, point.y);
+			halfWidth = halfWidth.sub(Vec(x, y)).norm().mul(Vec::lerp(initWidth, endWidth, currentLength, length) / 2);
+			//flog("initWidth is %f, halfwidth is %f, %f", initWidth, halfWidth.x, halfWidth.y);
+			Vec right(point);
+			right = right.sub(halfWidth);
+			//flog("right is %f, %f", px2x(right.x), px2y(right.y));
+			Vec left(point);
+			left = left.add(halfWidth);
+			glVertex2f(px2x(right.x), px2y(right.y));
+			glVertex2f(px2x(left.x), px2y(left.y));
+		}
+		
 		
 		lastPoint = Vec(cos(raddeg)*rr + x, sin(raddeg)*rr + y);
 
@@ -37,4 +63,13 @@ void Spiral::draw(){
 	flog("the length of the spiral is %f", length);
     glEnd();
     glFlush();
+}
+
+void Spiral::drawSolid(float initWidth, float endWidth) {
+	draw(false, 0, 0);
+	draw(true, initWidth, endWidth);
+}
+
+void Spiral::draw() {
+	draw(false, 0, 0);
 }
