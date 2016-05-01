@@ -1,8 +1,8 @@
-
+#include "common.h"
 #include "circle.h"
 #include "canvas.h"
-#include "constants.h"
-#include "viewport.h"
+
+
 #include <math.h>
 #include <stdio.h>
 
@@ -12,11 +12,16 @@ void Circle::draw(){
     glBegin(GL_LINE_STRIP);
     glColor3f(1,0,0);
     GLfloat delta;
+	//printf("x is %f, r is %f\n", x, r);
+	//printf("winheight=%f win width =%f\n", getWinHeight(), getWinWidth());
+	//printf("px test px2x(10)=%f, px2y(20)=%f\n", px2x(10), px2y(20));
     if (clockwise){
         delta=-1.0f;
         for (GLfloat i=startAngle; i>=startAngle-range;i+=delta){
             float deg=Vec::deg2rad(i);
+			
             glVertex2f(px2x(cos(deg)*r+x), px2y(sin(deg)*r+y));
+			//printf("deg is %f, vertex at %f, %f\n", deg, px2x(cos(deg)*r + x), px2y(sin(deg)*r + y));
         }
     }else{
         delta=1.0f;

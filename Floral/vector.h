@@ -27,8 +27,8 @@ public:
 		while (deg < 0) deg += 360.0f;
 		return deg;
 	}
-	static float deg2rad(float deg) { return regulizeDeg(deg) / PI; }
-	static float rad2deg(float rad) { return regulizeDeg(rad*PI); }
+	static float deg2rad(float deg) { return regulizeDeg(deg)*PI/180.0f; }
+	static float rad2deg(float rad) { return regulizeDeg(rad/PI*180.0f); }
 };
 
 #endif

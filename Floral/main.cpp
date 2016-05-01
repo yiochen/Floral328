@@ -103,7 +103,7 @@ void mouse(int mousebutton, int mousestate, int x, int y){
 				circle->range = 180.0f;
                 circle->startAngle=dis.angle();
 				printf("start angle is %f\n", circle->startAngle);
-                circle->clockwise=true;
+                circle->clockwise=false;
                 branch->add(circle);
                 debug("finish creating\n");
                 break;
@@ -164,13 +164,31 @@ void reshape(int width, int height) {
 
 void motion(int x, int y){
 
-    glutPostRedisplay();
+
+
+
+
+
+
+
+
+    //glutPostRedisplay();
     // drawPoint(rawx2px(x),rawy2px(y),NULL);
 }
 
 void angleTest() {
 	Vec a(0, 1);
-	printf("the angle of 0,1 is %f", a.angle());
+	Vec b(1, 1);
+	Vec c(-1, 1);
+	Vec d(-1, 0);
+	Vec e(-1, -1);
+	Vec f(1, -1);
+	printf("the angle of 0,1 is %f\n", a.angle());
+	printf("the angle of 1,1 is %f\n", b.angle());
+	printf("the angle of -1,1 is %f\n", c.angle());
+	printf("the angle of -1,0 is %f\n", d.angle());
+	printf("the angle of -1,-1 is %f\n", e.angle());
+	printf("the angle of 1,-1 is %f\n", f.angle());
 }
 int main(int argc, char** argv){
     glutInit(&argc, argv);
@@ -182,7 +200,7 @@ int main(int argc, char** argv){
     canvas=new Canvas();
     canvas->init();
 	initGL();
-	//angleTest();
+	angleTest();
 	branch=new Branch(0.0f,0.0f,Vec(50,0));
    
     canvas->add(branch);
