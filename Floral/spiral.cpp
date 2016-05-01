@@ -19,7 +19,7 @@ void Spiral::draw(){
     }
 
     while (rr>0){
-        GLfloat raddeg=deg*DEG2RAD;
+		GLfloat raddeg = Vec::deg2rad(deg);
         glVertex2f(px2x(cos(raddeg)*rr+x),px2y(sin(raddeg)*rr+y));
         rr-=(gap/360.0f*abs(delta));
         deg+=delta;

@@ -1,11 +1,10 @@
-#include "opengl_include.h"
+#include "common.h"
 #include "viewport.h"
 #include "debug.h"
 #include "string.h"
 #include <math.h>
 #include <chrono>
 #include <thread>
-#include "constants.h"
 #include "vector.h"
 #include "canvas.h"
 #include "drawingPrem.h"
@@ -22,7 +21,7 @@
 
 #include "LTexture.h"
 #include "LUtil.h"
-#include "SOIL.h"
+
 #define MAX_VERTS 100
 
 using namespace std;
@@ -32,7 +31,7 @@ Canvas * canvas=NULL;
 Branch* branch=NULL;
 
 
-LTexture gLoadedTexture;
+
 
 
 void renderUI(){
@@ -48,23 +47,8 @@ void display(){
 	if (canvas!=NULL){
         canvas->redraw();
     }
-    //renderUI();
-	glEnable(GL_TEXTURE_2D);
-	gLoadedTexture.render(0, 0);
-	glDisable(GL_TEXTURE_2D);
-	glBegin(GL_QUADS);
-	glColor3f(1.0f, 1.0f, 0.0f); //if no color specified, paint to white
-
-	glVertex3f(0, 0,-0.2f);
-	// printf("the coordinate is %f %f\n", px2x(x), px2y(y));
-	glVertex3f(5, 0, -0.2f);
-	// printf("the coordinate is %f %f\n", px2x(x+1), px2y(y));
-	glVertex3f(5, 5, -0.2f);
-	// printf("the coordinate is %f %f\n", px2x(x+1), px2y(y+1));
-	glVertex3f(0, 5, -0.2f);
-	// printf("the coordinate is %f %f\n", px2x(x), px2y(y+1));
-	glEnd();
-	glColor3f(1.0f, 1.0f, 1.0f);
+    renderUI();
+	
     glFlush();
 	/*int save_result = SOIL_save_screenshot(
 		"new_scr.bmp",
@@ -81,7 +65,19 @@ void keyboard(unsigned char key, int x, int y){
 
 
 }
-
+void screenshot() {
+	int save_result = SOIL_save_screenshot(
+		"new_screenshot.bmp",
+		SOIL_SAVE_TYPE_BMP,
+		0, 0, getWinWidth(), getWinHeight()
+		);
+	if (save_result == 1) {
+		printf("successfully saved screenshot\n");
+	}
+	else {
+		printf("saving screenshot failed\n");
+	}
+}
 void mouse(int mousebutton, int mousestate, int x, int y){
     if (mousestate==GLUT_DOWN){
         Vec tp(rawx2px(x), rawy2px(y));
@@ -158,7 +154,7 @@ void mouse(int mousebutton, int mousestate, int x, int y){
         }
         glutPostRedisplay();
     }
-
+	//screenshot();
 }
 
 void reshape(int width, int height) {
@@ -171,18 +167,7 @@ void motion(int x, int y){
     glutPostRedisplay();
     // drawPoint(rawx2px(x),rawy2px(y),NULL);
 }
-bool loadMedia() {
-	
-	//Load texture
-	if (!gLoadedTexture.loadTextureFromFile("texture.png"))
-	{
-		printf("Unable to load file texture!\n");
-		return false;
-	}
 
-	return true;
-	
-}
 void angleTest() {
 	Vec a(0, 1);
 	printf("the angle of 0,1 is %f", a.angle());
@@ -198,13 +183,9 @@ int main(int argc, char** argv){
     canvas->init();
 	initGL();
 	//angleTest();
-	
-	
-	//loadMedia();
-	loadMedia();
-   /* branch=new Branch(0.0f,0.0f,Vec(50,0));
+	branch=new Branch(0.0f,0.0f,Vec(50,0));
    
-    canvas->add(branch);*/
+    canvas->add(branch);
 
 
     glutDisplayFunc(display);

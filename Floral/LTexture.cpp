@@ -1,6 +1,4 @@
 #include "LTexture.h"
-
-
 #include <string>
 #include "SOIL.h"
 
@@ -19,10 +17,13 @@ LTexture::LTexture()
 
 LTexture::~LTexture()
 {
+	
 }
 
 void LTexture::init() {
-
+	mTextureID = 0;
+	mTextureWidth = 0;
+	mTextureHeight = 0;
 }
 //bool LTexture::loadTextureFromPixels32(GLuint* pixels, GLuint width, GLuint height) {
 //	//Free texture if it exists
@@ -70,7 +71,7 @@ void LTexture::render(GLfloat x, GLfloat y) {
 	{
 		//Remove any previous transformations
 		glLoadIdentity();
-
+		glEnable(GL_TEXTURE_2D);
 		//Move to rendering point
 		glTranslatef(x, y, 0.f);
 
@@ -78,13 +79,15 @@ void LTexture::render(GLfloat x, GLfloat y) {
 		glBindTexture(GL_TEXTURE_2D, mTextureID);
 		//Render textured quad
 		glBegin(GL_QUADS);
+		glColor3f(1.0f, 1.0f, 1.0f);//tint white
 		glTexCoord2f(0.f, 0.f); glVertex2f(0.f, 0.f);
 		glTexCoord2f(0.5f, 0.f); glVertex2f(mTextureWidth/2, 0.f);
 		glTexCoord2f(0.5f, 1.f); glVertex2f(mTextureWidth/2, mTextureHeight);
 		glTexCoord2f(0.f, 1.f); glVertex2f(0.f, mTextureHeight);
 		glEnd();
 		
-		
+		glLoadIdentity();
+		glDisable(GL_TEXTURE_2D);
 	}
 	//glutSwapBuffers();
 }

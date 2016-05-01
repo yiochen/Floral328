@@ -3,10 +3,9 @@
 /** The viewport has a coordinate system that
 *   origins from the left bottom corner of the window.
 *   X-axis points right, Y-asix points up.
-*   The smallest unit in the system is PIXEL_SIZE width and height
+*   The smallest unit in the system is 1 pixel width and height
 **/
 #include "opengl_include.h"
-
 
 GLfloat getWinHeight();
 GLfloat getWinWidth();

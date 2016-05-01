@@ -15,13 +15,13 @@ void Circle::draw(){
     if (clockwise){
         delta=-1.0f;
         for (GLfloat i=startAngle; i>=startAngle-range;i+=delta){
-            float deg=i*DEG2RAD;
+            float deg=Vec::deg2rad(i);
             glVertex2f(px2x(cos(deg)*r+x), px2y(sin(deg)*r+y));
         }
     }else{
         delta=1.0f;
         for (GLfloat i=startAngle; i<=startAngle+range;i+=delta){
-            float deg=i*DEG2RAD;
+            float deg=Vec::deg2rad(i);
             glVertex2f(px2x(cos(deg)*r+x), px2y(sin(deg)*r+y));
         }
     }

@@ -9,32 +9,32 @@ GLfloat getWinRawWidth(){
 }
 
 GLfloat getWinHeight(){
-    return getWinRawHeight()/PIXEL_SIZE;
+    return getWinRawHeight();
 }
 GLfloat getWinWidth(){
-    return getWinRawWidth()/PIXEL_SIZE;
+    return getWinRawWidth();
 }
 GLfloat rawx2px(GLfloat raw){
-    return raw/PIXEL_SIZE;
+    return raw;
 }
 GLfloat rawy2px(GLfloat raw){
-    return getWinHeight()-raw/PIXEL_SIZE-1;
+    return getWinHeight()-raw;
 }
 /** convert the horizontal length in pixel to length in opengl coordinate**/
 GLfloat l2x(GLfloat x){
-    return static_cast<GLfloat>(2*x)/static_cast<GLfloat>(getWinWidth());
+    return x;
 }
 /** convert the vertical length in pixel to length in opengl coordinate**/
 GLfloat l2y(GLfloat y){
-    return static_cast<GLfloat>(2*y)/static_cast<GLfloat>(getWinHeight());
+    return y;
 }
 
 /** convert x in pixel to opengl coordinate**/
 GLfloat px2x(GLfloat x){
-    return l2x(x)-1;
+    return x;
 }
 
 /** convert y in pixel to opengl coordinate**/
 GLfloat px2y(GLfloat y){
-    return l2y(y)-1;
+    return getWinHeight()-y;
 }

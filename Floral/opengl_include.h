@@ -8,5 +8,5 @@
 #include <GL/freeglut.h>
 
 #endif
-
+#include "SOIL.h"
 #endif

@@ -1,6 +1,8 @@
 #pragma once
 #include "opengl_include.h"
 #include <string>
+
+/*LTexture represent a texture read from file*/
 class LTexture
 {
 public:

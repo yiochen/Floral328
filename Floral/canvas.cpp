@@ -6,9 +6,6 @@ void Canvas::init(){
     glutInitWindowSize(SCR_W,SCR_H);
     glutInitWindowPosition(50,50);
     glutCreateWindow("floral");
-	
-	
-
 }
 
 void Canvas::redraw(){
