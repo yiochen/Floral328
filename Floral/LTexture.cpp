@@ -1,5 +1,5 @@
 #include "LTexture.h"
-#include <IL/il.h>
+
 
 #include <string>
 #include "SOIL.h"

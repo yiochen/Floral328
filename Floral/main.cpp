@@ -19,9 +19,7 @@
 
 #include <list>
 
-#include "IL/il.h"
-#include "IL/ilu.h"
-#include "IL/ilut.h"
+
 #include "LTexture.h"
 #include "LUtil.h"
 #include "SOIL.h"
