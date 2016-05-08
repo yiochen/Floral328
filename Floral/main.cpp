@@ -65,8 +65,12 @@ void mouse(int mousebutton, int mousestate, int x, int y){
 
 int main(int argc, char** argv){
 	sel::State state{ true };
-	state.Load("hello.lua");
-	
+	//state.Load("lua/config.lua");
+	//state.Load("lua/Vector.lua");
+	state.Load("main.lua");
+	state["config"]["win_height"] = 600;
+	printf("the height is %d\n",int(state["config"]["win_height"]));
+	printf("the lua return value is %d\n", int(state["getVec"]()));
     glutInit(&argc, argv);
 	
     canvas=Canvas::instance();
