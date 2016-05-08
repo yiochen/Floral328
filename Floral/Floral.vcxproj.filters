@@ -5,87 +5,74 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\entity">
-      <UniqueIdentifier>{c2656b62-20d4-46c8-8e52-0b5f12877986}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\entity">
       <UniqueIdentifier>{0726727f-660c-498d-b80a-bbb20c704150}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\display">
+      <UniqueIdentifier>{de95b7bb-fea1-440d-9ee6-ff4f7a4ac0e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\util">
+      <UniqueIdentifier>{11dbf1a8-d8cb-40be-b00b-4115a6b97566}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\math">
+      <UniqueIdentifier>{dce40a48-96a7-48ee-8e54-71ee20b7928f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\main">
+      <UniqueIdentifier>{e71c9c65-e554-4fbb-bdd3-61c7f988c3cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="canvas.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="constants.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="debug.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="drawingPrem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="opengl_include.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vector.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="viewport.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LTexture.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="branch.h">
-      <Filter>Header Files\entity</Filter>
+      <Filter>Source Files\entity</Filter>
     </ClInclude>
     <ClInclude Include="circle.h">
-      <Filter>Header Files\entity</Filter>
+      <Filter>Source Files\entity</Filter>
     </ClInclude>
     <ClInclude Include="shape.h">
-      <Filter>Header Files\entity</Filter>
+      <Filter>Source Files\entity</Filter>
     </ClInclude>
     <ClInclude Include="spiral.h">
-      <Filter>Header Files\entity</Filter>
+      <Filter>Source Files\entity</Filter>
+    </ClInclude>
+    <ClInclude Include="canvas.h">
+      <Filter>Source Files\display</Filter>
+    </ClInclude>
+    <ClInclude Include="drawingPrem.h">
+      <Filter>Source Files\display</Filter>
+    </ClInclude>
+    <ClInclude Include="LTexture.h">
+      <Filter>Source Files\display</Filter>
+    </ClInclude>
+    <ClInclude Include="viewport.h">
+      <Filter>Source Files\display</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="constants.h">
+      <Filter>Source Files\util</Filter>
+    </ClInclude>
+    <ClInclude Include="vector.h">
+      <Filter>Source Files\math</Filter>
     </ClInclude>
     <ClInclude Include="common.h">
-      <Filter>Header Files</Filter>
+      <Filter>Source Files\main</Filter>
+    </ClInclude>
+    <ClInclude Include="LUtil.h">
+      <Filter>Source Files\main</Filter>
+    </ClInclude>
+    <ClInclude Include="main_include.h">
+      <Filter>Source Files\main</Filter>
+    </ClInclude>
+    <ClInclude Include="opengl_include.h">
+      <Filter>Source Files\main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="canvas.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="drawingPrem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="vector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="viewport.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LTexture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LUtil.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="branch.cpp">
       <Filter>Source Files\entity</Filter>
     </ClCompile>
@@ -94,6 +81,27 @@
     </ClCompile>
     <ClCompile Include="spiral.cpp">
       <Filter>Source Files\entity</Filter>
+    </ClCompile>
+    <ClCompile Include="canvas.cpp">
+      <Filter>Source Files\display</Filter>
+    </ClCompile>
+    <ClCompile Include="drawingPrem.cpp">
+      <Filter>Source Files\display</Filter>
+    </ClCompile>
+    <ClCompile Include="LTexture.cpp">
+      <Filter>Source Files\display</Filter>
+    </ClCompile>
+    <ClCompile Include="viewport.cpp">
+      <Filter>Source Files\display</Filter>
+    </ClCompile>
+    <ClCompile Include="vector.cpp">
+      <Filter>Source Files\math</Filter>
+    </ClCompile>
+    <ClCompile Include="LUtil.cpp">
+      <Filter>Source Files\main</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files\main</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
