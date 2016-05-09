@@ -4,7 +4,10 @@
 
 
 #include "common.h"
+#include "LTexture.h"
 
+extern LTexture* texture;
+extern bool useTexture;
 void Spiral::draw(bool isSolid, float initWidth, float endWidth){
     printf("drawing spirals\n");
 	
@@ -13,12 +16,21 @@ void Spiral::draw(bool isSolid, float initWidth, float endWidth){
 		length = 0;
 		glLineWidth(lineWidth);
 		glBegin(GL_LINE_STRIP);
+		glColor3f(1, 0, 0);
 	}
 	else {
-		glBegin(GL_QUAD_STRIP);
+		if (useTexture) {
+			texture->mapStart();
+			
+		}
+		else {
+			glBegin(GL_QUAD_STRIP);
+			glColor3f(1, 0, 0);
+		}
+		
 	}
     
-    glColor3f(1,0,0);
+    
     GLfloat deg=startAngle;
     GLfloat delta;
     if (clockwise){
@@ -50,8 +62,20 @@ void Spiral::draw(bool isSolid, float initWidth, float endWidth){
 			//flog("right is %f, %f", px2x(right.x), px2y(right.y));
 			Vec left(point);
 			left = left.add(halfWidth);
-			glVertex2f(px2x(right.x), px2y(right.y));
-			glVertex2f(px2x(left.x), px2y(left.y));
+			if (useTexture) {
+				if (this->clockwise) {
+					texture->mapPair(Vec(right.x, right.y), Vec(left.x, left.y), currentLength / length);
+				}
+				else {
+					texture->mapPair(Vec(left.x, left.y), Vec(right.x, right.y), currentLength / length);
+
+				}
+			}
+			else {
+				glVertex2f(px2x(right.x), px2y(right.y));
+				glVertex2f(px2x(left.x), px2y(left.y));
+			}
+			
 		}
 		
 		
@@ -61,7 +85,12 @@ void Spiral::draw(bool isSolid, float initWidth, float endWidth){
         deg+=delta;
     }
 	flog("the length of the spiral is %f", length);
-    glEnd();
+	if (isSolid && useTexture) {
+		texture->mapEnd();
+	}
+	else {
+		glEnd();
+	}
     glFlush();
 }
 

@@ -1,5 +1,6 @@
 #include "LTexture.h"
 #include <string>
+#include "viewport.h"
 #include "SOIL.h"
 
 LTexture::LTexture()
@@ -80,16 +81,30 @@ void LTexture::render(GLfloat x, GLfloat y) {
 		//Render textured quad
 		glBegin(GL_QUADS);
 		glColor3f(1.0f, 1.0f, 1.0f);//tint white
-		glTexCoord2f(0.f, 0.f); glVertex2f(0.f, 0.f);
-		glTexCoord2f(0.5f, 0.f); glVertex2f(mTextureWidth/2, 0.f);
-		glTexCoord2f(0.5f, 1.f); glVertex2f(mTextureWidth/2, mTextureHeight);
-		glTexCoord2f(0.f, 1.f); glVertex2f(0.f, mTextureHeight);
+		glTexCoord2f(0.f, 0.f); glVertex2f(px2x(0.f), px2y(0.f));
+		glTexCoord2f(1.0f, 0.f); glVertex2f(px2x(mTextureWidth), px2y(0.f));
+		glTexCoord2f(1.0f, 1.f); glVertex2f(px2x(mTextureWidth), px2y(mTextureHeight));
+		glTexCoord2f(0.f, 1.f); glVertex2f(px2x(0.f), px2y(mTextureHeight));
 		glEnd();
 		
 		glLoadIdentity();
 		glDisable(GL_TEXTURE_2D);
 	}
 	//glutSwapBuffers();
+}
+void LTexture::mapStart() {
+	glEnable(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, mTextureID);
+	glBegin(GL_LINE_STRIP);
+	glColor3f(1.0f, 1.0f, 1.0f);//tint white
+}
+void LTexture::mapEnd() {
+	glEnd();
+	glDisable(GL_TEXTURE_2D);
+}
+void LTexture::mapPair(Vec v1, Vec v2, float ratio) {
+	glTexCoord2f(1.0f, ratio); glVertex2f(px2x(v1.x), px2y(v1.y));
+	glTexCoord2f(0.f, ratio);  glVertex2f(px2x(v2.x), px2y(v2.y));
 }
 
 GLuint LTexture::getTextureID()
@@ -144,7 +159,7 @@ bool LTexture::loadTextureFromFile(std::string path) {
 	//	printf("Unable to load %s\n", path.c_str());
 	//}
 	mTextureID = SOIL_load_OGL_texture(
-			"texture.jpg",
+			path.c_str(),
 			SOIL_LOAD_AUTO,
 			SOIL_CREATE_NEW_ID,
 		SOIL_FLAG_MIPMAPS | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT

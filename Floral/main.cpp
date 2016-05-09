@@ -13,6 +13,8 @@ list<Vec> controlHandles;
 Canvas * canvas=NULL;
 Branch* branch=NULL;
 
+LTexture* texture = NULL;
+bool useTexture = false;
 void renderUI(){
     //draw the contollHandles
     list<Vec>::iterator list=controlHandles.begin();
@@ -28,6 +30,7 @@ void display(){
         canvas->redraw();
     }
     renderUI();
+	//texture->render(100, 0);
     glFlush();
 }
 void reshape(int width, int height) {
@@ -67,13 +70,20 @@ void mouse(int mousebutton, int mousestate, int x, int y){
 
 int main(int argc, char** argv){
 	sel::State state{ true };
-	//state.Load("lua/config.lua");
-	//state.Load("lua/Vector.lua");
 	state.Load("main.lua");
+	if ((bool)(state["config"]["use_texture"]) == true) {
+		useTexture = true;
+	}
     glutInit(&argc, argv);
     canvas=Canvas::instance();
     canvas->init();
 	initGL();
+	if (useTexture) {
+		texture = new LTexture();
+		texture->init();
+		texture->loadTextureFromFile("colorstrip.jpg");
+	}
+	
 	angleTest();
 	int totalBanch = state["getTotalBranch"]();
 	for (int i = 0; i < totalBanch; i++) {

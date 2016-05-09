@@ -6,6 +6,11 @@
 #include <math.h>
 #include <stdio.h>
 
+#include "LTexture.h"
+
+extern LTexture* texture;
+extern bool useTexture;
+
 bool Circle::endCondition(GLfloat i) {
 	if (clockwise) return i >= startAngle - range;
 	else return i <= startAngle + range;
@@ -16,12 +21,22 @@ void Circle::draw(bool isSolid, float initWidth, float endWidth){
 	if (!isSolid) {
 		this->length = 0.0f;
 		glBegin(GL_LINE_STRIP);
+		glColor3f(1, 0, 0);
 	}
 	else {
-		glBegin(GL_QUAD_STRIP);
+		if (useTexture) {
+			texture->mapStart();
+		}
+		else {
+			glBegin(GL_QUAD_STRIP);
+			glColor3f(1, 0, 0);
+		}
+		
+		
+
 	}
     
-    glColor3f(1,0,0);
+    
 	GLfloat delta;
 	if (clockwise) {
 		delta = -1.0f;
@@ -51,16 +66,35 @@ void Circle::draw(bool isSolid, float initWidth, float endWidth){
 			//flog("right is %f, %f", px2x(right.x), px2y(right.y));
 			Vec left(point);
 			left=left.add(halfWidth);
-			glVertex2f(px2x(right.x), px2y(right.y));
-			glVertex2f(px2x(left.x), px2y(left.y));
-			//flog("drawing quad added %f,%f and %f, %f", px2x(right.x), px2y(right.y), px2x(left.x), px2y(left.y));
-			//add two point into it 
+			if (useTexture) {
+				if (this->clockwise) {
+					texture->mapPair(Vec(right.x, right.y), Vec(left.x, left.y), currentLength / length);
+				}
+				else {
+					texture->mapPair(Vec(left.x, left.y), Vec(right.x, right.y), currentLength / length);
+					
+				}
+				
+			}
+			else {
+				glVertex2f(px2x(right.x), px2y(right.y));
+				glVertex2f(px2x(left.x), px2y(left.y));
+			}
+			
+			
+			
 		}
 		lastPoint = Vec(cos(deg)*r + x, sin(deg)*r + y);
     }
   
 	flog("the length of the circle is is %f", length);
-    glEnd();
+	if (isSolid && useTexture) {
+		texture->mapEnd();
+	}
+	else {
+		glEnd();
+	}
+    
     glFlush();
 }
 void Circle::draw() {

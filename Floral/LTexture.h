@@ -1,5 +1,6 @@
 #pragma once
 #include "opengl_include.h"
+#include "vector.h"
 #include <string>
 
 /*LTexture represent a texture read from file*/
@@ -17,6 +18,11 @@ public:
 	GLuint getTextureID();
 	GLint textureWidth();
 	GLint textureHeight();
+
+	void mapStart();
+	void mapEnd();
+	void mapPair(Vec v1, Vec v2, float ratio);
+
 private:
 	GLuint mTextureID;
 	GLint mTextureWidth;
