@@ -9,7 +9,7 @@
 extern LTexture* texture;
 extern bool useTexture;
 void Spiral::draw(bool isSolid, float initWidth, float endWidth){
-    printf("drawing spirals\n");
+    //printf("drawing spirals\n");
 	
     GLfloat rr=this->r;
 	if (!isSolid) {
@@ -84,7 +84,7 @@ void Spiral::draw(bool isSolid, float initWidth, float endWidth){
         rr-=(gap/360.0f*abs(delta));
         deg+=delta;
     }
-	flog("the length of the spiral is %f", length);
+	
 	if (isSolid && useTexture) {
 		texture->mapEnd();
 	}

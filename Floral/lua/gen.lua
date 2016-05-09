@@ -4,7 +4,7 @@ require "lua.Vector"
 require "lua.VTable"
 gen={}
 
-math.randomseed(os.time())
+--math.randomseed(os.time())
 gen.randomPoint=function()
   return Vector(math.random(0,config.win_width),math.random(0, config.win_height))
 end
@@ -38,6 +38,7 @@ end
 
 --check if the branch root will not go out of frame
 gen.tsBoundaryBranch=function(branch)
+ 
   if (branch.total>1 or branch.total==0)
   then
     --more than one vertex in this branch alreay
@@ -110,6 +111,7 @@ function containCircle(v, radius)
 end
   
 gen.tsBranchInside=function(branch)
+  --print("start checking")
   local lastPoint=branch.root
   local lastOri=not branch.clockwise
   local lastRadius=0
@@ -121,23 +123,28 @@ gen.tsBranchInside=function(branch)
       --preserve the lastOri
       lasRadius=lastRadius-(branch[i]-lastPoint):mag()
       startVec=branch[i]-lastPoint
+      --print("inCircle, last radius is",lastRadius,"startVec is ", startVec:norm(),"orientation is clockwise",lastOri);
     else
       lastRadius=(branch[i]-lastPoint):mag()-lastRadius
       startVec=lastPoint-branch[i]
       lastOri=not lastOri
+      --print("outCircle, last radius is",lastRadius,"lastVec is",lastPoint,"startVec is ", startVec:norm(),"orientation is clockwise",lastOri);
     end--if
     
     endVec=branch[i+1]-branch[i]
+    --print("center at ",branch[i], "endVec is", endVec:norm())
     if (i+1==3) then print("aSDFFDFDFSF") end
     for j=0,1,0.2
     do
       --lerp the point
+      --print("checking ",j,"the vec is ",branch[i]+startVec:angleLerp(endVec, lastOri, j,lastRadius))
       if (not contain(branch[i]+startVec:angleLerp(endVec, lastOri, j,lastRadius)))
       then
         return false
       end--if
       
     end--for j
+    lastPoint=branch[i]
   end--for i
   --checking for the last spiral
   if (inCircle(lastPoint, lastRadius, branch[branch.total-1]))

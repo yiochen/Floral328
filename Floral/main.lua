@@ -11,6 +11,7 @@ function construct()
   return gen.basic()
 end
 print("start constructing")
+math.random()
 vt=construct()
 
 function getTotalBranch()

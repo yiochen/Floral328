@@ -87,7 +87,7 @@ void Circle::draw(bool isSolid, float initWidth, float endWidth){
 		lastPoint = Vec(cos(deg)*r + x, sin(deg)*r + y);
     }
   
-	flog("the length of the circle is is %f", length);
+	//flog("the length of the circle is is %f", length);
 	if (isSolid && useTexture) {
 		texture->mapEnd();
 	}
@@ -156,7 +156,7 @@ Vec Circle::touchingAt(Circle* circle){
         ratio=this->r/(this->r+circle->r);
     }
     Vec v3=v2.add(dis.norm().mul(ratio*dis.mag()));
-    printf("touching at %f, %f\n", v3.x, v3.y);
+   // printf("touching at %f, %f\n", v3.x, v3.y);
     return v3;
 }
 

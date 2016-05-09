@@ -124,4 +124,11 @@ end
 
 Vector.__index=Vector
 
+a=Vector(-0.934,-0.113904)
+b=Vector(-0.9525,0.304541)
+print("a angle", a:angle(),"b angle ",b:angle())
+for f=0,1,0.2
+do
+print(a:angleLerp(Vector(-0.9525,0.304541),true, 0.,1))
+end
 return Vector

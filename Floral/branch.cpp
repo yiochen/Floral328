@@ -23,7 +23,7 @@ Branch* Branch::add(Circle* part){
         GLfloat ang1=dis1.angle();
         GLfloat ang2=dis2.angle();
         if (lastCircle->clockwise){
-            printf("last circle starting angle is %f and ang1 is %f\n", lastCircle->startAngle, ang1);
+           /* printf("last circle starting angle is %f and ang1 is %f\n", lastCircle->startAngle, ang1);*/
 			if (lastCircle->startAngle < ang1) {
 				lastCircle->range = lastCircle->startAngle + 360.0 - ang1;
 			}
@@ -43,7 +43,7 @@ Branch* Branch::add(Circle* part){
         }
         
     }
-	printf("the radius is %f and the coor is %f, %f\n", part->r, part->x, part->y);
+	//printf("the radius is %f and the coor is %f, %f\n", part->r, part->x, part->y);
     this->parts.push_back(part);
     return this;
 }

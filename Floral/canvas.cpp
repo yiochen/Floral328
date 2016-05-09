@@ -16,7 +16,7 @@ void Canvas::init(){
 }
 
 void Canvas::redraw(){
-	printf("canvas redraw");
+	//printf("canvas redraw");
 	/*glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
 	gluOrtho2D(-1.0, 1.0, -1.0, 1.0);
@@ -25,7 +25,7 @@ void Canvas::redraw(){
     glClear(GL_COLOR_BUFFER_BIT);//clear the color buffer
     std::list<Shape*>::iterator it;
     for (it=displayList.begin();it!=displayList.end();it++){
-        printf("drawing shape\n");
+        //printf("drawing shape\n");
         ((Shape*)*it)->draw();
     }
 }
