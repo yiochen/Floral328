@@ -14,7 +14,7 @@ Canvas * canvas=NULL;
 Branch* branch=NULL;
 
 LTexture* texture = NULL;
-bool useTexture = false;
+bool useTexture = true;
 void renderUI(){
     //draw the contollHandles
     list<Vec>::iterator list=controlHandles.begin();

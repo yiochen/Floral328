@@ -94,8 +94,58 @@ gen.getAngle=function(branch,i)
     
   end
 end
-
+function containCircle(v, radius)
+  if (contain(v) and 
+    contain(v+Vector(0,1):scale(radius)) and
+    contain(v+Vector(1,0):scale(radius)) and
+    contain(v+Vector(-1,0):scale(radius)) and
+    contain(v+Vector(0,-1):scale(radius)))
+  then
+   
+      return true
+  else
+    
+      return false
+  end--if
+end
+  
 gen.tsBranchInside=function(branch)
+  local lastPoint=branch.root
+  local lastOri=not branch.clockwise
+  local lastRadius=0
+  for i=0, branch.total-2,1
+  do
+    local startVec, endVec
+    if (inCircle(lastPoint, lastRadius, branch[i]))
+    then 
+      --preserve the lastOri
+      lasRadius=lastRadius-(branch[i]-lastPoint):mag()
+      startVec=branch[i]-lastPoint
+    else
+      lastRadius=(branch[i]-lastPoint):mag()-lastRadius
+      startVec=lastPoint-branch[i]
+      lastOri=not lastOri
+    end--if
+    
+    endVec=branch[i+1]-branch[i]
+    if (i+1==3) then print("aSDFFDFDFSF") end
+    for j=0,1,0.2
+    do
+      --lerp the point
+      if (not contain(branch[i]+startVec:angleLerp(endVec, lastOri, j,lastRadius)))
+      then
+        return false
+      end--if
+      
+    end--for j
+  end--for i
+  --checking for the last spiral
+  if (inCircle(lastPoint, lastRadius, branch[branch.total-1]))
+  then
+    return containCircle(branch[branch.total-1],lastRadius-(branch[branch.total-1]-lastPoint):mag())
+  else
+    return containCircle(branch[branch.total-1],(branch[branch.total-1]-lastPoint):mag()-lastRadius)
+  end
   
 end
 
@@ -113,7 +163,11 @@ gen.basic=function()
         vtable:removeLastVec() 
       end
     until(branch.total>=config.max_vert_per_branch)
-      
+    if (not gen.tsBranchInside(branch))
+    then
+      vtable:removeLastBranch()
+    end
+    
   until(vtable.total>=config.max_branch)
   return vtable
 end

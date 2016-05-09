@@ -95,7 +95,7 @@ void LTexture::render(GLfloat x, GLfloat y) {
 void LTexture::mapStart() {
 	glEnable(GL_TEXTURE_2D);
 	glBindTexture(GL_TEXTURE_2D, mTextureID);
-	glBegin(GL_LINE_STRIP);
+	glBegin(GL_QUAD_STRIP);
 	glColor3f(1.0f, 1.0f, 1.0f);//tint white
 }
 void LTexture::mapEnd() {

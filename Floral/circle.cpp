@@ -12,8 +12,8 @@ extern LTexture* texture;
 extern bool useTexture;
 
 bool Circle::endCondition(GLfloat i) {
-	if (clockwise) return i >= startAngle - range;
-	else return i <= startAngle + range;
+	if (clockwise) return i > startAngle - range;
+	else return i < startAngle + range;
 }
 void Circle::draw(bool isSolid, float initWidth, float endWidth){
 	//glLineWidth(lineWidth);

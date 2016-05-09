@@ -10,21 +10,22 @@ math.randomseed(os.time())
 function construct()
   return gen.basic()
 end
-v=construct()
+print("start constructing")
+vt=construct()
 
 function getTotalBranch()
-  return v.total
+  return vt.total
 end
 
 function getBranchSize(i)
-  return v[i].total
+  return vt[i].total
 end
 
 function getVec(i,j)
-  return v[i][j].x, v[i][j].y
+  return vt[i][j].x, vt[i][j].y
 end
 
-print(v)
+print(vt)
 
 
 
