@@ -85,12 +85,25 @@ gen.tsRelativeRadius=function(branch)
   end
   return false--it wont get here
 end
+gen.getAngle=function(branch,i)
+  if (branch.total<i+2)
+  then 
+    print("cannot calculate angle ",i,"for a branch with",branch.total,"control points")
+    return 0
+  else
+    
+  end
+end
 
+gen.tsBranchInside=function(branch)
+  
+end
+
+  
 
 gen.basic=function()
   local vtable=VTable()
-  for i=0,4,1
-  do
+  repeat
     local branch=vtable:addBranch()
     repeat
       vtable:addVec(gen.randomPoint())
@@ -101,7 +114,7 @@ gen.basic=function()
       end
     until(branch.total>=config.max_vert_per_branch)
       
-  end
+  until(vtable.total>=config.max_branch)
   return vtable
 end
 

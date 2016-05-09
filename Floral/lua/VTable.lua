@@ -22,6 +22,13 @@ do
       self.total=self.total+1
       return t
     end
+    function meta:removeLastBranch()
+      if (self.total>0)
+      then
+        self.total=self.total-1
+      end
+    end
+    
     
     function meta:getCurrentBranch()
       if (self.total<=0)
