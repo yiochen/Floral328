@@ -77,7 +77,7 @@ Branch* Canvas::addNewHandles(Vec tp) {
 		circle->range = 180.0f;
 		circle->startAngle = dis.angle();
 		printf("start angle is %f\n", circle->startAngle);
-		circle->clockwise = true;
+		circle->clockwise = false;
 		branch->add(circle);
 		debug("finish creating\n");
 		break;
@@ -115,4 +115,10 @@ Branch* Canvas::addNewHandles(Vec tp) {
 		//create a spiral
 	}
 	return branch;
+}
+
+Branch* Canvas::addNewBranch(Vec root, bool clockwise) {
+	currentBranch = new Branch(0, 0, root);
+	this->add(currentBranch);
+	return currentBranch;
 }

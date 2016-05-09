@@ -16,7 +16,7 @@ end
 function deg2rad(x)
   return regulizeDeg(x)*math.pi/180.0
 end
-    
+
 Vector={}
 do
    local meta = {
@@ -40,7 +40,14 @@ do
     function meta:__tostring()
         return ("<%g, %g>"):format(self.x, self.y)
     end
-
+    --rotate counter clockwise
+    function meta:rotate(deg)
+        local rad=deg2rad(deg)
+        local sin=math.sin(rad)
+        local cos=math.cos(rad)
+        return Vector(self.x*cos-self.y*sin,self.y*cos+self.x*sin)
+    end
+      
     function meta:mag()
         return math.sqrt( self * self )
     end
@@ -54,10 +61,17 @@ do
         
         return rad2deg(math.atan2(self.y,self.x))
     end
+    
+    function meta:plain()
+      return self.x, self.y
+    end
     setmetatable( Vector, {
         __call = function( V, x ,y ) return setmetatable( {x = x, y = y}, meta ) end
     } )
 end
 
 Vector.__index=Vector
+
+v=Vector(0,1)
+print(v:rotate(90))
 return Vector

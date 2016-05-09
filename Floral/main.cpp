@@ -38,7 +38,9 @@ void reshape(int width, int height) {
 
 
 void keyboard(unsigned char key, int x, int y){
-
+	switch (key) {
+	case 's':screenshot(); break;
+	}
 
 }
 
@@ -68,16 +70,21 @@ int main(int argc, char** argv){
 	//state.Load("lua/config.lua");
 	//state.Load("lua/Vector.lua");
 	state.Load("main.lua");
-	state["config"]["win_height"] = 600;
-	printf("the height is %d\n",int(state["config"]["win_height"]));
-	printf("the lua return value is %d\n", int(state["getVec"]()));
     glutInit(&argc, argv);
-	
     canvas=Canvas::instance();
     canvas->init();
 	initGL();
 	angleTest();
-	branch = canvas->getCurrentBranch();
+	int totalBanch = state["getTotalBranch"]();
+	for (int i = 0; i < totalBanch; i++) {
+		int branchSize = state["getBranchSize"](i);
+		canvas->addNewBranch(Vec(0, 0), true);
+		for (int j = 0; j < branchSize; j++) {
+			int x, y;
+			sel::tie(x, y) = state["getVec"](i,j);
+			canvas->addNewHandles(Vec(x, y));
+		}
+	}
     glutDisplayFunc(display);
 
 	glutReshapeFunc(reshape);

@@ -27,6 +27,7 @@ public:
     void add(Shape* shape);
     void remove(Shape* shape);
 	Branch* addNewHandles(Vec handle);
+	Branch* addNewBranch(Vec root, bool clockwise);
 };
 
 #endif
