@@ -117,6 +117,7 @@ gen.tsBranchInside=function(branch)
   local lastRadius=0
   for i=0, branch.total-2,1
   do
+    
     local startVec, endVec
     if (inCircle(lastPoint, lastRadius, branch[i]))
     then 
@@ -147,10 +148,14 @@ gen.tsBranchInside=function(branch)
     lastPoint=branch[i]
   end--for i
   --checking for the last spiral
+  
+  
   if (inCircle(lastPoint, lastRadius, branch[branch.total-1]))
   then
+    --print("last center at ",branch[branch.total-1], "lastRadius is ",lastRadius-(branch[branch.total-1]-lastPoint):mag());
     return containCircle(branch[branch.total-1],lastRadius-(branch[branch.total-1]-lastPoint):mag())
   else
+    --print("last center at ",branch[branch.total-1], "lastRadius is ", (branch[branch.total-1]-lastPoint):mag()-lastRadius);
     return containCircle(branch[branch.total-1],(branch[branch.total-1]-lastPoint):mag()-lastRadius)
   end
   

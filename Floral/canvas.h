@@ -21,11 +21,12 @@ public:
     std::list<Shape*> displayList;
 	Branch* getCurrentBranch();
 	
-    void init();
+    void init(float width, float height);
     void redraw();
     void reshape();
     void add(Shape* shape);
     void remove(Shape* shape);
+	void clear();
 	Branch* addNewHandles(Vec handle);
 	Branch* addNewBranch(Vec root, bool clockwise);
 };

@@ -12,7 +12,7 @@ using namespace sel;
 list<Vec> controlHandles;
 Canvas * canvas=NULL;
 Branch* branch=NULL;
-
+sel::State state{ true };
 LTexture* texture = NULL;
 bool useTexture = true;
 void renderUI(){
@@ -35,14 +35,31 @@ void display(){
 }
 void reshape(int width, int height) {
 	lReshape(width, height);
+	state["config"]["win_width"] = width;
+	state["config"]["win_height"] = height;
 	canvas->reshape();
 	display();
 }
-
+void constructScene() {
+	canvas->clear();
+	if (useTexture) printf("using texture");
+	int totalBanch = state["getTotalBranch"]();
+	for (int i = 0; i < totalBanch; i++) {
+		int branchSize = state["getBranchSize"](i);
+		canvas->addNewBranch(Vec(0, 0), true);
+		for (int j = 0; j < branchSize; j++) {
+			int x, y;
+			sel::tie(x, y) = state["getVec"](i, j);
+			canvas->addNewHandles(Vec(x, y));
+		}
+	}
+	glutPostRedisplay();
+}
 
 void keyboard(unsigned char key, int x, int y){
 	switch (key) {
 	case 's':screenshot(); break;
+	case 'c':state["construct"](); constructScene(); break;
 	}
 
 }
@@ -69,14 +86,14 @@ void mouse(int mousebutton, int mousestate, int x, int y){
 
 
 int main(int argc, char** argv){
-	sel::State state{ true };
+	
 	state.Load("main.lua");
 	if ((bool)(state["config"]["use_texture"]) == true) {
 		useTexture = true;
 	}
     glutInit(&argc, argv);
     canvas=Canvas::instance();
-    canvas->init();
+    canvas->init((int)state["config"]["win_width"],(int)state["config"]["win_height"]);
 	initGL();
 	if (useTexture) {
 		texture = new LTexture();
@@ -84,17 +101,8 @@ int main(int argc, char** argv){
 		texture->loadTextureFromFile("colorstrip.jpg");
 	}
 	
-	angleTest();
-	int totalBanch = state["getTotalBranch"]();
-	for (int i = 0; i < totalBanch; i++) {
-		int branchSize = state["getBranchSize"](i);
-		canvas->addNewBranch(Vec(0, 0), true);
-		for (int j = 0; j < branchSize; j++) {
-			int x, y;
-			sel::tie(x, y) = state["getVec"](i,j);
-			canvas->addNewHandles(Vec(x, y));
-		}
-	}
+	//angleTest();
+	constructScene();
     glutDisplayFunc(display);
 
 	glutReshapeFunc(reshape);

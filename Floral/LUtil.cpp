@@ -5,6 +5,7 @@
 #include "vector.h"
 #include <chrono>
 #include <thread>
+#include <vector>
 //Checkerboard texture
 LTexture gCheckerBoardTexture;
 
@@ -67,10 +68,17 @@ void angleTest() {
 	printf("the angle of 1,-1 is %f\n", f.angle());
 }
 void screenshot() {
-	int save_result = SOIL_save_screenshot(
+	int w = getWinWidth();
+	int h = getWinHeight();
+	std::vector< unsigned char > buf(w * h * 3);
+
+	glPixelStorei(GL_PACK_ALIGNMENT, 1);
+	glReadPixels(0, 0, w, h, GL_RGB, GL_UNSIGNED_BYTE, &buf[0]);
+	int save_result = SOIL_save_image(
 		"new_screenshot.bmp",
-		SOIL_SAVE_TYPE_BMP,
-		0, 0, getWinWidth(), getWinHeight()
+		SOIL_SAVE_TYPE_BMP ,
+		w, h, 3,
+		&buf[0]
 		);
 	if (save_result == 1) {
 		printf("successfully saved screenshot\n");

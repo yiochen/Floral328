@@ -8,8 +8,8 @@
 
 Canvas* Canvas::s_instance = NULL;
 
-void Canvas::init(){
-    glutInitWindowSize(SCR_W,SCR_H);
+void Canvas::init(float width, float height){
+    glutInitWindowSize((int)width,(int)height);
     glutInitWindowPosition(50,50);
     glutCreateWindow("floral");
 	currentBranch = NULL;
@@ -44,6 +44,9 @@ void Canvas::remove(Shape* shape){
     }else{
         displayList.remove(shape);
     }
+}
+void Canvas::clear() {
+	displayList.clear();
 }
 
 Branch* Canvas::getCurrentBranch() {
